@@ -1,0 +1,86 @@
+---
+title: "Progr_R_Taxi_NY"
+author: 'Grupo: Cauê, Marcelo, Marcos, Priscila'
+date: "24 de junho de 2018"
+output: html_document
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Verifica e instala os pacotes necessários
+
+```{r}
+# Seleciona o diretório onde estará a aplicação
+diretorio_aplicacao = choose.dir(caption="Escolha o diretorio da aplicacao")
+
+#Atribui o diretório onde estarão os dados 
+diretorio_arq_dados <- paste(diretorio_aplicacao,.Platform$file.sep,"entradas",sep="")
+
+#Atribui o diretório onde estarão os scripts
+diretorio_scripts <- paste(diretorio_aplicacao,.Platform$file.sep,"scripts",sep="")
+
+#Atribui o diretório onde estarão as imagens
+diretorio_imagens <- paste(diretorio_aplicacao,.Platform$file.sep,"imagens",sep="")
+
+setwd(diretorio_scripts)
+
+source("TaxiNY-VerificaPacotes.R",echo=TRUE,max.deparse.length=1000)
+```
+
+
+#Carrega os datasets primários e enriquece os dados principais
+
+```{r}
+
+setwd(diretorio_scripts)
+
+source("TaxiNY-Enriquece.R",echo=TRUE,max.deparse.length=1000)
+
+```
+
+
+```{r}
+
+setwd(diretorio_scripts)
+source("TaxiNY-PreparaDados.R",echo=TRUE,max.deparse.length=1000)
+
+```
+
+
+```{r}
+setwd(diretorio_scripts)
+source("TaxiNY-Regressão.R",echo=TRUE,max.deparse.length=1000)
+
+```
+
+
+```{r}
+setwd(diretorio_scripts)
+source("TaxiNY-Cluster.R",echo=TRUE,max.deparse.length=1000)
+
+```
+
+
+Chama o Shiny App
+
+```{r}
+library(shiny)
+
+# Precisa das linhas abaixo se o diretorio atual nao for o mesmo que se encontra o diretorio 2IA
+
+# Seleciona o diretório onde estarão os arquivos de dados
+#diretorio_arq_dados = choose.dir(caption="Escolha o diretório onde estarão os arquivos de dados")
+
+#Atribui o diretorio corrente como sendo o diretorio de dados para realizar a leitura das informações 
+setwd(diretorio_scripts)
+
+nome_arq_png_modelo_machine_learning <- paste(diretorio_imagens,.Platform$file.sep,"Modelagem ML.001.png",sep="")
+
+runApp("TaxiNY-shinny")
+```
+
+
+
